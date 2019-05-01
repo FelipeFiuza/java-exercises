@@ -1,12 +1,12 @@
 public class Produto {
-    private string codigo;
-    private string descricao;
-    private string unidadeMedida;
+    private String codigo;
+    private String descricao;
+    private String unidadeMedida;
     private double qtdeEstoque;
     private double preco;
     private double estoqueMinimo;
 
-    class Produto(string codigo, string descricao) {
+    class Produto(String codigo, String descricao) {
         this.codigo = codigo;
         this.descricao = descricao;
     }
