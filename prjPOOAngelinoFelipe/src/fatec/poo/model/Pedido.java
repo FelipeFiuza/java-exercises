@@ -1,23 +1,31 @@
 package fatec.poo.model;
 
+import java.util.ArrayList;
+
 public class Pedido {
     private String numero;
     private String dataEmissao;
-    private String dataPagamento;
-    private Boolean formatoPagamento;
+    private String dataPagto;
+    private Boolean formatoPagto;
     private Boolean situacao;
+    private Cliente cliente;
+    private Vendedor vendedor;
+    private ArrayList<ItemPedido> itens;
 
     public Pedido(String numero, String dataEmissao) {
         this.numero = numero;
         this.dataEmissao = dataEmissao;
+        this.situacao = true;
+        itens = new ArrayList<ItemPedido>();
     }
 
-    public void setDataPagamento(String dataPagamento) {
-        this.dataPagamento = dataPagamento;
+    public void setDataPagto(String dataPagamento) {
+        this.dataPagto = dataPagamento;
+        this.situacao = false;
     }
 
-    public void setFormatoPagamento(Boolean formatoPagamento) {
-        this.formatoPagamento = formatoPagamento;
+    public void setFormatoPagto(Boolean formatoPagamento) {
+        this.formatoPagto = formatoPagamento;
     }
 
     public void setSituacao(Boolean situacao) {
@@ -32,15 +40,37 @@ public class Pedido {
         return dataEmissao;
     }
 
-    public String getDataPagamento() {
-        return dataPagamento;
+    public String getDataPagto() {
+        return dataPagto;
     }
 
-    public Boolean getFormatoPagamento() {
-        return formatoPagamento;
+    public Boolean getFormatoPagto() {
+        return formatoPagto;
     }
 
     public Boolean getSituacao() {
         return situacao;
+    }
+    
+    // Testar
+    public void addItem(ItemPedido itemPedido){
+        itens.add(itemPedido);
+//        itemPedido.setQtdeVendida(this);
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public Vendedor getVendedor() {
+        return vendedor;
+    }
+    
+    public void setVendedor(Vendedor vendedor) {
+        this.vendedor = vendedor;
+    }
+    
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 }

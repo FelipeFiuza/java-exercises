@@ -1,13 +1,16 @@
 package fatec.poo.model;
 
+import java.util.ArrayList;
+
 public class Vendedor extends Pessoa {
     private double salarioBase;
     private double taxaComissao;
-//    private ArrayList<Pedido> = new ArrayList<Pedido>)();
+    private ArrayList<Pedido> pedidos;
 
     public Vendedor(String cpf, String nome, double salarioBase) {
         super(cpf, nome);
         this.salarioBase = salarioBase;
+        this.pedidos = new ArrayList<Pedido>();
     }
     
     public void setTaxaComissao(double taxaComissao) {
@@ -24,6 +27,11 @@ public class Vendedor extends Pessoa {
 
     public void setSalarioBase(double salarioBase) {
         this.salarioBase = salarioBase;
+    }
+    
+    public void addPedido(Pedido pedido){
+        pedidos.add(pedido);
+//        pedido.setVendedor(this);
     }
     
     
