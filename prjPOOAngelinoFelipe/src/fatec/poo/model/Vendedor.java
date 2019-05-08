@@ -29,9 +29,9 @@ public class Vendedor extends Pessoa {
         this.salarioBase = salarioBase;
     }
     
-    public void addPedido(Pedido pedido){
-        pedidos.add(pedido);
-//        pedido.setVendedor(this);
+    public void addPedido(Pedido ped){
+        pedidos.add(ped);
+        ped.setVendedor(this);
     }
     
     

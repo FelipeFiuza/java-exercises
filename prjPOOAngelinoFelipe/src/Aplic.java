@@ -1,8 +1,10 @@
 
 import fatec.poo.model.Cliente;
+import fatec.poo.model.ItemPedido;
 import fatec.poo.model.Pedido;
 import fatec.poo.model.Produto;
 import fatec.poo.model.Vendedor;
+import java.util.Scanner;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -20,6 +22,8 @@ public class Aplic {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        Scanner entrada = new Scanner(System.in);
         
         Cliente c1 = new Cliente("999999", "Ze", 5000);
         c1.setEndereco("Rua 1");
@@ -50,11 +54,11 @@ public class Aplic {
         
         Pedido p2 = new Pedido("0002", "03/05/2019");
         
-        //p1.setVendedor(v1);
-        //p1.setCliente(c1);
+        p1.setVendedor(v1);
+        p1.setCliente(c1);
         
-        //p2.setVendedor(v2);
-        //p2.setCliente(c2);
+        p2.setVendedor(v2);
+        p2.setCliente(c2);
         
         Produto prd1 = new Produto("9001", "Coxinha");
         prd1.setQtdeEstoque(80);
@@ -67,6 +71,43 @@ public class Aplic {
         prd2.setUnidadeMedida("unidades");
         prd2.setPreco(2.5);
         prd2.setEstoqueMinimo(15);
+        
+        Produto prd3 = new Produto("9003", "Coca-cola");
+        prd3.setQtdeEstoque(100);
+        prd3.setUnidadeMedida("latas");
+        prd3.setPreco(3.0);
+        prd3.setEstoqueMinimo(30);
+        
+        ItemPedido ip1 = new ItemPedido(1, 3, prd1);
+        ItemPedido ip2 = new ItemPedido(2, 2, prd2);
+        ItemPedido ip3 = new ItemPedido(1, 1, prd3);
+        
+        p1.addItem(ip1);
+        p1.addItem(ip2);
+        p2.addItem(ip3);
+        
+        System.out.println("\nPedido: " + p1.getNumero() +
+                           "\nData: " + p1.getDataEmissao() +
+                           "\nCliente: " + p1.getCliente().getNome() +
+                           "\nEndereço: " + p1.getCliente().getEndereco() +
+                           "\nCidade: " + p1.getCliente().getCidade() +
+                           "\tUF: " + p1.getCliente().getUf() +
+                           "\nCEP: " + p1.getCliente().getCep() +
+                           "\tTelefone: (" + p1.getCliente().getDdd() + ") " + p1.getCliente().getTelefone() +
+                           "\nVendedor: " + p1.getVendedor().getNome()
+        );
+        p1.setSituacao(true);
+        System.out.println("Limite Disp: R$ " + c1.getLimiteDisp());
+        
+       
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         

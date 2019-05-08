@@ -6,7 +6,7 @@ public class Pedido {
     private String numero;
     private String dataEmissao;
     private String dataPagto;
-    private Boolean formatoPagto;
+    private Boolean formaPagto;
     private Boolean situacao;
     private Cliente cliente;
     private Vendedor vendedor;
@@ -21,11 +21,10 @@ public class Pedido {
 
     public void setDataPagto(String dataPagamento) {
         this.dataPagto = dataPagamento;
-        this.situacao = false;
     }
 
     public void setFormatoPagto(Boolean formatoPagamento) {
-        this.formatoPagto = formatoPagamento;
+        this.formaPagto = formatoPagamento;
     }
 
     public void setSituacao(Boolean situacao) {
@@ -45,7 +44,7 @@ public class Pedido {
     }
 
     public Boolean getFormatoPagto() {
-        return formatoPagto;
+        return formaPagto;
     }
 
     public Boolean getSituacao() {
@@ -55,7 +54,13 @@ public class Pedido {
     // Testar
     public void addItem(ItemPedido itemPedido){
         itens.add(itemPedido);
-//        itemPedido.setQtdeVendida(this);
+        itemPedido.setPedido(this);
+        
+        if(this.getSituacao()) {
+           double limiteAtual = cliente.getLimiteDisp();
+           cliente.setLimiteDisp(limiteAtual - /*(double) itemPedido.getQtdeVendida() * */itemPedido.getProduto().getPreco());
+        }
+        
     }
 
     public Cliente getCliente() {
@@ -73,4 +78,5 @@ public class Pedido {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+  
 }

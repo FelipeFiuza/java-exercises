@@ -9,6 +9,8 @@ public class ItemPedido {
     public ItemPedido(int sequencia, double qtdeVendida, Produto produto) {
         this.sequencia = sequencia;
         this.qtdeVendida = qtdeVendida;
+        
+        produto.setQtdeEstoque(produto.getQtdeEstoque() - qtdeVendida);
     }
 
     public int getSequencia() {
@@ -24,7 +26,7 @@ public class ItemPedido {
         produto.setQtdeEstoque(produto.getQtdeEstoque() - this.getQtdeVendida());
     }
    
-    // Testar
+    
     public Produto getProduto() {
         return produto;
     }

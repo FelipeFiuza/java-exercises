@@ -14,20 +14,24 @@ public class Cliente extends Pessoa{
         this.pedidos = new ArrayList<Pedido>();
     }
 
-    public double getLimiteCredito() {
+    public double getLimiteCred() {
         return limiteCred;
     }
 
-    public double getLimiteDisponivel() {
+    public double getLimiteDisp() {
         return limiteDisp;
     }
 
-    public void setLimiteCredito(double limiteCredito) {
+    public void setLimiteCred(double limiteCredito) {
         this.limiteCred = limiteCredito;
     }    
     
-    public void addPedido(Pedido pedido) {
-        pedidos.add(pedido);
-//        pedido.setCliente(this);
+    public void addPedido(Pedido ped) {
+        pedidos.add(ped);
+        ped.setCliente(this);
+    }
+
+    public void setLimiteDisp(double limiteDisp) {
+        this.limiteDisp = limiteDisp;
     }
 }
