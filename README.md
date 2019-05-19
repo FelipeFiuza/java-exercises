@@ -1,6 +1,6 @@
 ## Java exercises from OOP classes
 
-This repository it's for saving my progress at homework.
+This repository is intended to save my progress at homework
 
 ### Exercises
 
