@@ -88,11 +88,22 @@ public class GuiProduto extends javax.swing.JFrame {
         lblPrecoUnitario.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblPrecoUnitario.setText("Preço Unitário");
 
+        txtCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCodigoActionPerformed(evt);
+            }
+        });
+
         txtDescricao.setEnabled(false);
 
         btnConsultar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/pesq.png"))); // NOI18N
         btnConsultar.setText("Consultar");
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarActionPerformed(evt);
+            }
+        });
 
         txtQtdeDisponivel.setEnabled(false);
         txtQtdeDisponivel.addActionListener(new java.awt.event.ActionListener() {
@@ -186,6 +197,20 @@ public class GuiProduto extends javax.swing.JFrame {
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_btnSairActionPerformed
+
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+//        produto = null;
+        Integer codigo = Integer.parseInt(txtCodigo.getText());
+        
+        if (codigo == null) {
+           System.out.println(codigo);
+        }
+    }//GEN-LAST:event_btnConsultarActionPerformed
+
+    // FAVOR DELETAR FELIPE
+    private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCodigoActionPerformed
 
     /**
      * @param args the command line arguments

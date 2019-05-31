@@ -77,28 +77,35 @@ public class Pessoa {
         int     digitoCPF;
         String  nDigResult;
 
-        CPF = CPF.replace(".","");
-        CPF = CPF.replace("-","");
+        CPF = CPF.replace(".", "");
+        CPF = CPF.replace("-", "");
 		
-	if (CPF.equals("00000000000") || CPF.equals("11111111111") || CPF.equals("22222222222") 
-			|| CPF.equals("33333333333") || CPF.equals("44444444444") || CPF.equals("55555555555") 
-			|| CPF.equals("66666666666") || CPF.equals("77777777777") || CPF.equals("88888888888") || CPF.equals("99999999999") 
-			|| (CPF.length() != 11)) {
+	if (CPF.equals("00000000000") || 
+            CPF.equals("11111111111") || 
+            CPF.equals("22222222222") || 
+            CPF.equals("33333333333") || 
+            CPF.equals("44444444444") || 
+            CPF.equals("55555555555") ||
+            CPF.equals("66666666666") || 
+            CPF.equals("77777777777") || 
+            CPF.equals("88888888888") || 
+            CPF.equals("99999999999") ||
+            (CPF.length() != 11)) {
             return (false);
         }
 		
         d1 = d2 = 0;
         digito1 = digito2 = resto = 0;
 
-        for (int nCount = 1; nCount < CPF.length() -1; nCount++)
+        for (int index = 1; index < CPF.length() -1; index++)
         {
-           digitoCPF = Integer.valueOf (CPF.substring(nCount -1, nCount)).intValue();
+           digitoCPF = Integer.valueOf (CPF.substring(index -1, index)).intValue();
 
            //multiplique a ultima casa por 2 a seguinte por 3 a seguinte por 4 e assim por diante.
-           d1 = d1 + ( 11 - nCount ) * digitoCPF;
+           d1 = d1 + ( 11 - index ) * digitoCPF;
 
            //para o segundo digito repita o procedimento incluindo o primeiro digito calculado no passo anterior.
-           d2 = d2 + ( 12 - nCount ) * digitoCPF;
+           d2 = d2 + ( 12 - index ) * digitoCPF;
         };
 
         //Primeiro resto da divisão por 11.
