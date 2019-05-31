@@ -6,6 +6,8 @@
 package fatec.poo.view;
 
 import fatec.poo.control.Conexao;
+import fatec.poo.control.DaoCliente;
+import fatec.poo.model.Cliente;
 
 /**
  *
@@ -113,6 +115,11 @@ public class GuiCliente extends javax.swing.JFrame {
         btnConsultar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/pesq.png"))); // NOI18N
         btnConsultar.setText("Consultar");
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarActionPerformed(evt);
+            }
+        });
 
         btnIncluir.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/add.png"))); // NOI18N
@@ -274,8 +281,54 @@ public class GuiCliente extends javax.swing.JFrame {
         conexao = new Conexao("BD1723016","BD1723016");
         conexao.setDriver("oracle.jdbc.driver.OracleDriver");
         conexao.setConnectionString("jdbc:oracle:thin:@apolo:1521:xe");
-        //daoCliente = new DaoCliente(conexao.conectar());
+        daoCliente = new DaoCliente(conexao.conectar());
     }//GEN-LAST:event_formWindowOpened
+
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        if (!cliente.validarCPF(formTxtCpf.getText()))
+        {
+            System.out.println("CPF Errado!");
+            return;
+        }
+        
+        cliente = null;
+        
+        cliente = daoCliente.consultar(formTxtCpf.getText());
+        
+        if (cliente == null){
+            formTxtCpf.setEnabled(false);
+            txtNome.setEnabled(true);
+            txtNome.requestFocus();
+            txtEndereco.setEnabled(true);
+            txtCidade.setEnabled(true);
+            .setEnabled(true);
+            
+            btnConsultar.setEnabled(false);
+            btnInserir.setEnabled(true);
+            btnAlterar.setEnabled(false);
+            btnExcluir.setEnabled(false);
+        }
+        else{
+            txtDescricao.setText(projeto.getDescricao());
+            txtDataInicio.setText(projeto.getDataInicio());
+            txtDataTermino.setText(projeto.getDataTermino());
+            
+       
+            txtCodigo.setEnabled(false); 
+            txtDescricao.setEnabled(true);
+            txtDescricao.requestFocus();
+            txtDataInicio.setEnabled(true);
+            txtDataTermino.setEnabled(true);
+          
+            btnConsultar.setEnabled(false);
+            btnInserir.setEnabled(false);
+            btnAlterar.setEnabled(true);
+            btnExcluir.setEnabled(true);
+        }
+        
+       
+   
+    }//GEN-LAST:event_btnConsultarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -339,4 +392,6 @@ public class GuiCliente extends javax.swing.JFrame {
     private javax.swing.JTextField txtUF;
     // End of variables declaration//GEN-END:variables
     private Conexao conexao = null;
+    private Cliente cliente = null;
+    private DaoCliente daoCliente = null;
 }
