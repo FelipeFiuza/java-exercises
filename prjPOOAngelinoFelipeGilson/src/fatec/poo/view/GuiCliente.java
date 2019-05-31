@@ -43,7 +43,6 @@ public class GuiCliente extends javax.swing.JFrame {
         txtLimiteCredito = new javax.swing.JTextField();
         txtDdd = new javax.swing.JTextField();
         lblUF = new javax.swing.JLabel();
-        txtUF = new javax.swing.JTextField();
         txtCep = new javax.swing.JTextField();
         lblCEP = new javax.swing.JLabel();
         lbl1 = new javax.swing.JLabel();
@@ -55,6 +54,7 @@ public class GuiCliente extends javax.swing.JFrame {
         btnSair = new javax.swing.JButton();
         lblLimiteDisponivel = new javax.swing.JLabel();
         formTxtCpf = new javax.swing.JFormattedTextField();
+        cboUf = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadsro De Cliente");
@@ -99,8 +99,6 @@ public class GuiCliente extends javax.swing.JFrame {
 
         lblUF.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblUF.setText("UF");
-
-        txtUF.setEnabled(false);
 
         txtCep.setEnabled(false);
 
@@ -154,6 +152,9 @@ public class GuiCliente extends javax.swing.JFrame {
         }
         formTxtCpf.setActionCommand("<Not Set>");
 
+        cboUf.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RR", "RS", "SE", "SC", "SP", "TO" }));
+        cboUf.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -198,7 +199,8 @@ public class GuiCliente extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(lblUF)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtUF, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cboUf, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(91, 91, 91))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -241,8 +243,8 @@ public class GuiCliente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblCidade)
-                    .addComponent(txtUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblUF))
+                    .addComponent(lblUF)
+                    .addComponent(cboUf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -285,9 +287,10 @@ public class GuiCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        if (!cliente.validarCPF(formTxtCpf.getText()))
+        if(!cliente.validarCPF(formTxtCpf.getText()))
         {
             System.out.println("CPF Errado!");
+            formTxtCpf.requestFocus();
             return;
         }
         
@@ -296,38 +299,42 @@ public class GuiCliente extends javax.swing.JFrame {
         cliente = daoCliente.consultar(formTxtCpf.getText());
         
         if (cliente == null){
-            formTxtCpf.setEnabled(false);
-            txtNome.setEnabled(true);
-            txtNome.requestFocus();
-            txtEndereco.setEnabled(true);
-            txtCidade.setEnabled(true);
-            .setEnabled(true);
             
             btnConsultar.setEnabled(false);
-            btnInserir.setEnabled(true);
+            btnIncluir.setEnabled(true);
             btnAlterar.setEnabled(false);
             btnExcluir.setEnabled(false);
-        }
-        else{
-            txtDescricao.setText(projeto.getDescricao());
-            txtDataInicio.setText(projeto.getDataInicio());
-            txtDataTermino.setText(projeto.getDataTermino());
             
-       
-            txtCodigo.setEnabled(false); 
-            txtDescricao.setEnabled(true);
-            txtDescricao.requestFocus();
-            txtDataInicio.setEnabled(true);
-            txtDataTermino.setEnabled(true);
-          
+        }
+        else {
+            
+            txtNome.setText(cliente.getNome());
+            txtCidade.setText(cliente.getCidade());
+            cboUf.setSelectedItem(cliente.getUf());
+            txtCep.setText(cliente.getCep());
+            txtDdd.setText(cliente.getDdd());
+            txtTelefone.setText(cliente.getTelefone());
+            lblLimiteCredito.setText(Double.toString(cliente.getLimiteCred()));
+            lblLimiteDisponivel.setText(Double.toString(cliente.getLimiteDisp()));
+                     
             btnConsultar.setEnabled(false);
-            btnInserir.setEnabled(false);
+            btnIncluir.setEnabled(false);
             btnAlterar.setEnabled(true);
             btnExcluir.setEnabled(true);
         }
         
-       
-   
+        formTxtCpf.setEnabled(false);
+        txtNome.setEnabled(true);
+        txtNome.requestFocus();
+        txtEndereco.setEnabled(true);
+        txtCidade.setEnabled(true);
+        cboUf.setEnabled(true);
+        txtCep.setEnabled(true);
+        txtDdd.setEnabled(true);
+        txtTelefone.setEnabled(true);
+        lblLimiteCredito.setEnabled(true);
+        lblLimiteDisponivel.setEnabled(true);
+  
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     /**
@@ -371,6 +378,7 @@ public class GuiCliente extends javax.swing.JFrame {
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnIncluir;
     private javax.swing.JButton btnSair;
+    private javax.swing.JComboBox<String> cboUf;
     private javax.swing.JFormattedTextField formTxtCpf;
     private javax.swing.JLabel lbl1;
     private javax.swing.JLabel lblCEP;
@@ -389,7 +397,6 @@ public class GuiCliente extends javax.swing.JFrame {
     private javax.swing.JTextField txtLimiteCredito;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtTelefone;
-    private javax.swing.JTextField txtUF;
     // End of variables declaration//GEN-END:variables
     private Conexao conexao = null;
     private Cliente cliente = null;

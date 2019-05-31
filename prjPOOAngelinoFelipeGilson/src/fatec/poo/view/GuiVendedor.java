@@ -36,7 +36,6 @@ public class GuiVendedor extends javax.swing.JFrame {
         lblUF = new javax.swing.JLabel();
         lblCPF = new javax.swing.JLabel();
         btnExcluir = new javax.swing.JButton();
-        txtUF = new javax.swing.JTextField();
         btnSair = new javax.swing.JButton();
         txtCep = new javax.swing.JTextField();
         lblCEP = new javax.swing.JLabel();
@@ -51,6 +50,7 @@ public class GuiVendedor extends javax.swing.JFrame {
         txtCidade = new javax.swing.JTextField();
         btnConsultar = new javax.swing.JButton();
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        cboUf = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastro de Vendedor");
@@ -85,8 +85,6 @@ public class GuiVendedor extends javax.swing.JFrame {
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/Eraser.png"))); // NOI18N
         btnExcluir.setText("Excluir");
         btnExcluir.setEnabled(false);
-
-        txtUF.setEnabled(false);
 
         btnSair.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/exit.png"))); // NOI18N
@@ -138,6 +136,9 @@ public class GuiVendedor extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+
+        cboUf.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RR", "RS", "SE", "SC", "SP", "TO" }));
+        cboUf.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -192,7 +193,8 @@ public class GuiVendedor extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(lblUF)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtUF, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cboUf, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(91, 91, 91))
                             .addComponent(txtNome)
                             .addComponent(txtEndereco, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
@@ -222,17 +224,17 @@ public class GuiVendedor extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblCidade)
-                    .addComponent(txtUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblUF))
+                    .addComponent(lblUF)
+                    .addComponent(cboUf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblCEP))
-                    .addComponent(lblTelefone)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtDdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblTelefone)))
                 .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTaxaComissao)
@@ -305,6 +307,7 @@ public class GuiVendedor extends javax.swing.JFrame {
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnIncluir;
     private javax.swing.JButton btnSair;
+    private javax.swing.JComboBox<String> cboUf;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel lblCEP;
     private javax.swing.JLabel lblCPF;
@@ -323,6 +326,5 @@ public class GuiVendedor extends javax.swing.JFrame {
     private javax.swing.JTextField txtSalarioBase;
     private javax.swing.JTextField txtTaxaComissao;
     private javax.swing.JTextField txtTelefone;
-    private javax.swing.JTextField txtUF;
     // End of variables declaration//GEN-END:variables
 }
