@@ -52,6 +52,13 @@ public class Produto {
     public void setEstoqueMinimo(double estoqueMinimo) {
         this.estoqueMinimo = estoqueMinimo;
     }
-    
+
+    public String getCodigo() {
+        return codigo;
+    }    
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
     
 }

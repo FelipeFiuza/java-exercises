@@ -44,7 +44,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="lblCPF" alignment="1" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblCidade" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblLimiteCredito" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbl2" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -78,7 +78,8 @@
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="lblUF" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="txtUF" min="-2" pref="161" max="-2" attributes="0"/>
+                              <Component id="cboUf" min="-2" pref="70" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -131,8 +132,8 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="txtCidade" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblCidade" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtUF" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblUF" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cboUf" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -147,7 +148,7 @@
                   <Component id="lbl1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtLimiteCredito" alignment="3" max="32767" attributes="0"/>
                   <Component id="lblLimiteDisponivel" max="32767" attributes="0"/>
-                  <Component id="lblLimiteCredito" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lbl2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -203,7 +204,7 @@
         <Property name="text" type="java.lang.String" value="Telefone"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblLimiteCredito">
+    <Component class="javax.swing.JLabel" name="lbl2">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="11" style="1"/>
@@ -225,9 +226,6 @@
       <Properties>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCidadeActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtLimiteCredito">
       <Properties>
@@ -245,11 +243,6 @@
           <Font name="Tahoma" size="11" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="UF"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtUF">
-      <Properties>
-        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtCep">
@@ -288,6 +281,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Consultar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnConsultarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnIncluir">
       <Properties>
@@ -300,6 +296,9 @@
         <Property name="text" type="java.lang.String" value="Incluir"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnIncluirActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnAlterar">
       <Properties>
@@ -312,6 +311,9 @@
         <Property name="text" type="java.lang.String" value="Alterar"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAlterarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnExcluir">
       <Properties>
@@ -324,6 +326,9 @@
         <Property name="text" type="java.lang.String" value="Excluir"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExcluirActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnSair">
       <Properties>
@@ -353,8 +358,47 @@
         <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
           <Format format="###.###.###-##" subtype="-1" type="5"/>
         </Property>
-        <Property name="actionCommand" type="java.lang.String" value="&lt;Not Set&gt;"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cboUf">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="28">
+            <StringItem index="0" value=" "/>
+            <StringItem index="1" value="AC"/>
+            <StringItem index="2" value="AL"/>
+            <StringItem index="3" value="AM"/>
+            <StringItem index="4" value="AP"/>
+            <StringItem index="5" value="BA"/>
+            <StringItem index="6" value="CE"/>
+            <StringItem index="7" value="DF"/>
+            <StringItem index="8" value="ES"/>
+            <StringItem index="9" value="GO"/>
+            <StringItem index="10" value="MA"/>
+            <StringItem index="11" value="MG"/>
+            <StringItem index="12" value="MS"/>
+            <StringItem index="13" value="MT"/>
+            <StringItem index="14" value="PA"/>
+            <StringItem index="15" value="PB"/>
+            <StringItem index="16" value="PE"/>
+            <StringItem index="17" value="PI"/>
+            <StringItem index="18" value="PR"/>
+            <StringItem index="19" value="RJ"/>
+            <StringItem index="20" value="RN"/>
+            <StringItem index="21" value="RO"/>
+            <StringItem index="22" value="RR"/>
+            <StringItem index="23" value="RS"/>
+            <StringItem index="24" value="SE"/>
+            <StringItem index="25" value="SC"/>
+            <StringItem index="26" value="SP"/>
+            <StringItem index="27" value="TO"/>
+          </StringArray>
+        </Property>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

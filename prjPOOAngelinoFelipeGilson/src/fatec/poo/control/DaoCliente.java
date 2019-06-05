@@ -15,75 +15,107 @@ public class DaoCliente {
          this.conn = conn;
     }
     
-    /*public void inserir(Cliente cliente) {
+    public void incluir(Cliente cliente) {
         PreparedStatement ps = null;
         try {
             ps = conn.prepareStatement("INSERT INTO clientes(cpf, " +
-                                                             "nome, " +
-                                                             "endereco, ") VALUES(?,?,?,?)");
-            ps.setInt(1, .getCodigo());
-            ps.setString(2, projeto.getDescricao());
-            ps.setString(3, projeto.getDataInicio());
-            ps.setString(4, projeto.getDataTermino());
+                                                            "nome, " +
+                                                            "endereco, " +
+                                                            "cidade, " + 
+                                                            "uf, " +
+                                                            "cep, " +
+                                                            "ddd, " +
+                                                            "telefone, " +
+                                                            "limitecred, " +
+                                                            "limitedisp) VALUES (?,?,?,?,?,?,?,?,?,?)");
+            ps.setString(1, cliente.getCpf());
+            ps.setString(2, cliente.getNome());
+            ps.setString(3, cliente.getEndereco());
+            ps.setString(4, cliente.getCidade());
+            ps.setString(5, cliente.getUf());
+            ps.setString(6, cliente.getCep());
+            ps.setString(7, cliente.getDdd());
+            ps.setString(8, cliente.getTelefone());
+            ps.setDouble(9, cliente.getLimiteCred());
+            ps.setDouble(10, cliente.getLimiteDisp());
             
                       
             ps.execute();
         } catch (SQLException ex) {
-             System.out.println(ex.toString());   
+            System.out.println("Erro ao incluir ->" + ex.toString());   
         }
     }
     
-    public void alterar(Projeto projeto) {
+    public void alterar(Cliente cliente) {
         PreparedStatement ps = null;
         try {
-            ps = conn.prepareStatement("UPDATE tbprojeto SET descricao_proj = ?," +
-                                                 "datainicio_proj = ?," +
-                                                 "datatermino_proj = ?," +
-                                                 "where codigo_proj = ?");
+            ps = conn.prepareStatement("UPDATE clientes SET nome = ?," +
+                                                           "endereco = ?, " +
+                                                           "cidade = ?, " + 
+                                                           "uf = ?, " +
+                                                           "cep = ?, " +
+                                                           "ddd = ?, " +
+                                                           "telefone = ?, " +
+                                                           "limiteCred = ?, " +
+                                                           "limiteDisp = ?" +
+                                                           "WHERE cpf = ?");
             
-            ps.setString(1, projeto.getDescricao());
-            ps.setString(2, projeto.getDataInicio());
-            ps.setString(3, projeto.getDataTermino());
-            ps.setInt(4, projeto.getCodigo());
+            ps.setString(1, cliente.getNome());
+            ps.setString(2, cliente.getEndereco());
+            ps.setString(3, cliente.getCidade());
+            ps.setString(4, cliente.getUf());
+            ps.setString(5, cliente.getCep());
+            ps.setString(6, cliente.getDdd());
+            ps.setString(7, cliente.getTelefone());
+            ps.setDouble(8, cliente.getLimiteCred());
+            ps.setDouble(9, cliente.getLimiteDisp());
+            ps.setString(10, cliente.getCpf());
             
            
             ps.execute();
         } catch (SQLException ex) {
-             System.out.println(ex.toString());   
+             System.out.println("Erro ao alterar -> " + ex.toString());   
         }
     }
         
-     public  Projeto consultar (int codigo) {
-        Projeto p = null;
+    public Cliente consultar (String cpf) {
+        Cliente c = null;
        
         PreparedStatement ps = null;
         try {
-            ps = conn.prepareStatement("SELECT * from tbprojeto where " +
-                                                 "codigo_proj = ?");
+            ps = conn.prepareStatement("SELECT * FROM clientes WHERE cpf = ?");
             
-            ps.setInt(1, codigo);
+            ps.setString(1, cpf);
             ResultSet rs = ps.executeQuery();
-           
+
             if (rs.next() == true) {
-                p = new Projeto (codigo, rs.getString("descricao_proj"));
-            }
+                c = new Cliente (cpf, rs.getString("nome"), rs.getDouble("limitecred") );
+                c.setEndereco(rs.getString("endereco"));
+                c.setCidade(rs.getString("cidade"));
+                c.setUf(rs.getString("uf"));
+                c.setCep(rs.getString("cep"));
+                c.setDdd(rs.getString("ddd"));
+                c.setTelefone(rs.getString("telefone"));
+                c.setLimiteCred(rs.getDouble("limitecred"));
+                
+            } else System.out.println("CPF não existe no BD");
         }
         catch (SQLException ex) { 
-             System.out.println(ex.toString());   
+            System.out.println("Erro ao consultar -> " + ex.toString());   
         }
-        return (p);
+        return (c);
     }    
      
-     public void excluir(Projeto projeto) {
+    public void excluir(Cliente cliente) {
         PreparedStatement ps = null;
         try {
-            ps = conn.prepareStatement("DELETE FROM tbprojeto where codigo_proj = ?");
+            ps = conn.prepareStatement("DELETE FROM clientes WHERE cpf = ?");
             
-            ps.setInt(1, projeto.getCodigo());
+            ps.setString(1, cliente.getCpf());
                       
             ps.execute();
         } catch (SQLException ex) {
-             System.out.println(ex.toString());   
+            System.out.println(ex.toString());   
         }
-    }*/
+    }
 }

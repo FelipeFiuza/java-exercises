@@ -5,6 +5,11 @@
  */
 package fatec.poo.view;
 
+import fatec.poo.control.Conexao;
+import fatec.poo.control.DaoProduto;
+import fatec.poo.model.Produto;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Gilson
@@ -42,18 +47,35 @@ public class GuiProduto extends javax.swing.JFrame {
         txtDescricao = new javax.swing.JTextField();
         btnConsultar = new javax.swing.JButton();
         txtQtdeDisponivel = new javax.swing.JTextField();
+        lbl88 = new javax.swing.JLabel();
+        txtUnidadeMedida = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         btnIncluir.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/add.png"))); // NOI18N
         btnIncluir.setText("Incluir");
         btnIncluir.setEnabled(false);
+        btnIncluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIncluirActionPerformed(evt);
+            }
+        });
 
         btnAlterar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/Alterar.png"))); // NOI18N
         btnAlterar.setText("Alterar");
         btnAlterar.setEnabled(false);
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         lblCodigo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblCodigo.setText("Código");
@@ -62,6 +84,11 @@ public class GuiProduto extends javax.swing.JFrame {
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/Eraser.png"))); // NOI18N
         btnExcluir.setText("Excluir");
         btnExcluir.setEnabled(false);
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         lblDescricao.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblDescricao.setText("Descrição");
@@ -88,12 +115,6 @@ public class GuiProduto extends javax.swing.JFrame {
         lblPrecoUnitario.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblPrecoUnitario.setText("Preço Unitário");
 
-        txtCodigo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCodigoActionPerformed(evt);
-            }
-        });
-
         txtDescricao.setEnabled(false);
 
         btnConsultar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -106,11 +127,11 @@ public class GuiProduto extends javax.swing.JFrame {
         });
 
         txtQtdeDisponivel.setEnabled(false);
-        txtQtdeDisponivel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtQtdeDisponivelActionPerformed(evt);
-            }
-        });
+
+        lbl88.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lbl88.setText("Unidade de Medida");
+
+        txtUnidadeMedida.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -132,12 +153,12 @@ public class GuiProduto extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addComponent(lblQtdeDisponivel)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(txtQtdeDisponivel, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(44, 44, 44)
-                            .addComponent(lblPrecoUnitario)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtPrecoUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtQtdeDisponivel, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(33, 33, 33)
+                            .addComponent(lbl88)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtUnidadeMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblEstoqueMinimo)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -149,8 +170,12 @@ public class GuiProduto extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblPrecoUnitario)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtPrecoUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAlterar, btnConsultar, btnExcluir, btnIncluir, btnSair});
@@ -171,10 +196,14 @@ public class GuiProduto extends javax.swing.JFrame {
                     .addComponent(lblQtdeDisponivel)
                     .addComponent(txtQtdeDisponivel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtEstoqueMinimo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblEstoqueMinimo)
+                    .addComponent(lbl88)
+                    .addComponent(txtUnidadeMedida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPrecoUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblPrecoUnitario)
-                    .addComponent(lblEstoqueMinimo))
-                .addGap(94, 94, 94)
+                    .addComponent(lblPrecoUnitario))
+                .addGap(67, 67, 67)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnIncluir)
@@ -182,7 +211,7 @@ public class GuiProduto extends javax.swing.JFrame {
                         .addComponent(btnExcluir)
                         .addComponent(btnSair))
                     .addComponent(btnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAlterar, btnConsultar, btnExcluir, btnIncluir, btnSair});
@@ -190,27 +219,147 @@ public class GuiProduto extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtQtdeDisponivelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQtdeDisponivelActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtQtdeDisponivelActionPerformed
-
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
-        dispose();        // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-//        produto = null;
-        Integer codigo = Integer.parseInt(txtCodigo.getText());
-        
-        if (codigo == null) {
-           System.out.println(codigo);
+        if(!(txtCodigo.getText().matches("^[0-9]*$")))//testar se string é composta apenas por numeros
+        {
+            JOptionPane.showMessageDialog(this, "Codigo Inválido! Por favor, digite um codigo contendo apenas numeros.", "Erro Codigo", 2);
+            txtCodigo.requestFocus();
+            return;
         }
+        
+        produto = null;
+        
+        produto = daoProduto.consultar(txtCodigo.getText());
+        
+        if (produto == null){
+            
+            btnConsultar.setEnabled(false);
+            btnIncluir.setEnabled(true);
+            btnAlterar.setEnabled(false);
+            btnExcluir.setEnabled(false);
+            
+        }
+        else {
+            
+            txtDescricao.setText(produto.getDescricao());
+            txtQtdeDisponivel.setText(Double.toString(produto.getQtdeEstoque()));
+            txtUnidadeMedida.setText(produto.getUnidadeMedida());
+            txtPrecoUnitario.setText(Double.toString(produto.getPreco()));
+            txtEstoqueMinimo.setText(Double.toString(produto.getEstoqueMinimo()));
+                     
+            btnConsultar.setEnabled(false);
+            btnIncluir.setEnabled(false);
+            btnAlterar.setEnabled(true);
+            btnExcluir.setEnabled(true);
+        }
+        
+        txtCodigo.setEnabled(false);
+        txtDescricao.setEnabled(true);
+        txtDescricao.requestFocus();
+        txtQtdeDisponivel.setEnabled(true);
+        txtUnidadeMedida.setEnabled(true);
+        txtPrecoUnitario.setEnabled(true);
+        txtEstoqueMinimo.setEnabled(true);
     }//GEN-LAST:event_btnConsultarActionPerformed
 
-    // FAVOR DELETAR FELIPE
-    private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCodigoActionPerformed
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        conexao = new Conexao("BD1723015","BD1723015");
+        conexao.setDriver("oracle.jdbc.driver.OracleDriver");
+        conexao.setConnectionString("jdbc:oracle:thin:@apolo:1521:xe");
+        daoProduto = new DaoProduto(conexao.conectar());
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
+        produto = new Produto(txtCodigo.getText(), 
+                              txtDescricao.getText());
+        produto.setQtdeEstoque(Double.valueOf(txtQtdeDisponivel.getText()));
+        produto.setUnidadeMedida(txtUnidadeMedida.getText());
+        produto.setPreco(Double.valueOf(txtPrecoUnitario.getText()));
+        produto.setEstoqueMinimo(Double.valueOf(txtEstoqueMinimo.getText()));
+        
+        
+        daoProduto.incluir(produto);
+         
+        txtCodigo.setText("");
+        txtDescricao.setText("");
+        txtQtdeDisponivel.setText("");
+        txtUnidadeMedida.setText("");
+        txtPrecoUnitario.setText("");
+        txtEstoqueMinimo.setText("");
+        
+        txtCodigo.setEnabled(true);
+        txtDescricao.setEnabled(false);
+        txtQtdeDisponivel.setEnabled(false);
+        txtUnidadeMedida.setEnabled(false);
+        txtPrecoUnitario.setEnabled(false);
+        txtEstoqueMinimo.setEnabled(false);
+        
+        btnConsultar.setEnabled(true);
+        btnIncluir.setEnabled(false);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+    }//GEN-LAST:event_btnIncluirActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        if (JOptionPane.showConfirmDialog(null, "Confirma Alteração?")== 0){//Sim
+            produto.setCodigo(txtCodigo.getText());
+            produto.setDescricao(txtDescricao.getText());
+            produto.setQtdeEstoque(Double.valueOf(txtQtdeDisponivel.getText()));
+            produto.setUnidadeMedida(txtUnidadeMedida.getText());
+            produto.setPreco(Double.valueOf(txtPrecoUnitario.getText()));
+            produto.setEstoqueMinimo(Double.valueOf(txtEstoqueMinimo.getText()));
+            
+            daoProduto.alterar(produto);
+        } 
+        
+        txtCodigo.setText("");
+        txtDescricao.setText("");
+        txtQtdeDisponivel.setText("");
+        txtUnidadeMedida.setText("");
+        txtPrecoUnitario.setText("");
+        txtEstoqueMinimo.setText("");
+        
+        txtCodigo.setEnabled(true);
+        txtDescricao.setEnabled(false);
+        txtQtdeDisponivel.setEnabled(false);
+        txtUnidadeMedida.setEnabled(false);
+        txtPrecoUnitario.setEnabled(false);
+        txtEstoqueMinimo.setEnabled(false);
+        
+        btnConsultar.setEnabled(true);
+        btnIncluir.setEnabled(false);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        if (JOptionPane.showConfirmDialog(null, "Confirma Exclusão?") == 0){
+            daoProduto.excluir(produto); 
+
+            txtCodigo.setText("");
+            txtDescricao.setText("");
+            txtQtdeDisponivel.setText("");
+            txtUnidadeMedida.setText("");
+            txtPrecoUnitario.setText("");
+            txtEstoqueMinimo.setText("");
+
+            txtCodigo.setEnabled(true);
+            txtDescricao.setEnabled(false);
+            txtQtdeDisponivel.setEnabled(false);
+            txtUnidadeMedida.setEnabled(false);
+            txtPrecoUnitario.setEnabled(false);
+            txtEstoqueMinimo.setEnabled(false);
+
+            btnConsultar.setEnabled(true);
+            btnIncluir.setEnabled(false);
+            btnAlterar.setEnabled(false);
+            btnExcluir.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -253,6 +402,7 @@ public class GuiProduto extends javax.swing.JFrame {
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnIncluir;
     private javax.swing.JButton btnSair;
+    private javax.swing.JLabel lbl88;
     private javax.swing.JLabel lblCodigo;
     private javax.swing.JLabel lblDescricao;
     private javax.swing.JLabel lblEstoqueMinimo;
@@ -263,5 +413,9 @@ public class GuiProduto extends javax.swing.JFrame {
     private javax.swing.JTextField txtEstoqueMinimo;
     private javax.swing.JTextField txtPrecoUnitario;
     private javax.swing.JTextField txtQtdeDisponivel;
+    private javax.swing.JTextField txtUnidadeMedida;
     // End of variables declaration//GEN-END:variables
+    private Conexao conexao = null;
+    private Produto produto = null;
+    private DaoProduto daoProduto = null;
 }

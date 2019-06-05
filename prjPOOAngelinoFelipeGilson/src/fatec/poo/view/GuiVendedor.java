@@ -5,6 +5,11 @@
  */
 package fatec.poo.view;
 
+import fatec.poo.control.Conexao;
+import fatec.poo.control.DaoVendedor;
+import fatec.poo.model.Vendedor;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Gilson
@@ -36,7 +41,6 @@ public class GuiVendedor extends javax.swing.JFrame {
         lblUF = new javax.swing.JLabel();
         lblCPF = new javax.swing.JLabel();
         btnExcluir = new javax.swing.JButton();
-        txtUF = new javax.swing.JTextField();
         btnSair = new javax.swing.JButton();
         txtCep = new javax.swing.JTextField();
         lblCEP = new javax.swing.JLabel();
@@ -50,10 +54,16 @@ public class GuiVendedor extends javax.swing.JFrame {
         lblCidade = new javax.swing.JLabel();
         txtCidade = new javax.swing.JTextField();
         btnConsultar = new javax.swing.JButton();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        formTxtCpf = new javax.swing.JFormattedTextField();
+        cboUf = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastro de Vendedor");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         lblTelefone.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblTelefone.setText("Telefone");
@@ -64,6 +74,11 @@ public class GuiVendedor extends javax.swing.JFrame {
         btnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/add.png"))); // NOI18N
         btnIncluir.setText("Incluir");
         btnIncluir.setEnabled(false);
+        btnIncluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIncluirActionPerformed(evt);
+            }
+        });
 
         lblSalarioBase.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblSalarioBase.setText("Salario Base");
@@ -74,6 +89,11 @@ public class GuiVendedor extends javax.swing.JFrame {
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/Alterar.png"))); // NOI18N
         btnAlterar.setText("Alterar");
         btnAlterar.setEnabled(false);
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         lblUF.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblUF.setText("UF");
@@ -85,8 +105,11 @@ public class GuiVendedor extends javax.swing.JFrame {
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/Eraser.png"))); // NOI18N
         btnExcluir.setText("Excluir");
         btnExcluir.setEnabled(false);
-
-        txtUF.setEnabled(false);
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnSair.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/exit.png"))); // NOI18N
@@ -123,21 +146,24 @@ public class GuiVendedor extends javax.swing.JFrame {
         lblCidade.setText("Cidade");
 
         txtCidade.setEnabled(false);
-        txtCidade.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCidadeActionPerformed(evt);
-            }
-        });
 
         btnConsultar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/pesq.png"))); // NOI18N
         btnConsultar.setText("Consultar");
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarActionPerformed(evt);
+            }
+        });
 
         try {
-            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+            formTxtCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+
+        cboUf.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RR", "RS", "SE", "SC", "SP", "TO" }));
+        cboUf.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -192,11 +218,12 @@ public class GuiVendedor extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(lblUF)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtUF, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cboUf, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(91, 91, 91))
                             .addComponent(txtNome)
                             .addComponent(txtEndereco, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(formTxtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
@@ -209,7 +236,7 @@ public class GuiVendedor extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCPF)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(formTxtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -222,17 +249,17 @@ public class GuiVendedor extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblCidade)
-                    .addComponent(txtUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblUF))
+                    .addComponent(lblUF)
+                    .addComponent(cboUf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblCEP))
-                    .addComponent(lblTelefone)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtDdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblTelefone)))
                 .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTaxaComissao)
@@ -256,13 +283,193 @@ public class GuiVendedor extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCidadeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCidadeActionPerformed
-
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
-        dispose();        // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_btnSairActionPerformed
+
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        if(!vendedor.validarCPF(formTxtCpf.getText()))
+        {
+            JOptionPane.showMessageDialog(this, "CPF Inválido! Por favor, digite um CPF válido.", "Erro CPF", 2);
+            formTxtCpf.requestFocus();
+            return;
+        }
+        
+        String cpf = formTxtCpf.getText();
+        cpf = cpf.replace("-", "");
+        cpf = cpf.replace(".", "");
+        vendedor = null;
+        
+        vendedor = daoVendedor.consultar(cpf);
+        
+        if (vendedor == null){
+            
+            btnConsultar.setEnabled(false);
+            btnIncluir.setEnabled(true);
+            btnAlterar.setEnabled(false);
+            btnExcluir.setEnabled(false);
+            
+        }
+        else {
+            
+            txtNome.setText(vendedor.getNome());
+            txtCidade.setText(vendedor.getCidade());
+            txtEndereco.setText(vendedor.getEndereco());
+            cboUf.setSelectedItem(vendedor.getUf());
+            txtCep.setText(vendedor.getCep());
+            txtDdd.setText(vendedor.getDdd());
+            txtTelefone.setText(vendedor.getTelefone());
+            txtSalarioBase.setText(Double.toString(vendedor.getSalarioBase()));
+            txtTaxaComissao.setText(Double.toString(vendedor.getTaxaComissao()));
+                     
+            btnConsultar.setEnabled(false);
+            btnIncluir.setEnabled(false);
+            btnAlterar.setEnabled(true);
+            btnExcluir.setEnabled(true);
+        }
+        
+        formTxtCpf.setEnabled(false);
+        txtNome.setEnabled(true);
+        txtNome.requestFocus();
+        txtEndereco.setEnabled(true);
+        txtCidade.setEnabled(true);
+        cboUf.setEnabled(true);
+        txtCep.setEnabled(true);
+        txtDdd.setEnabled(true);
+        txtTelefone.setEnabled(true);
+        txtSalarioBase.setEnabled(true);
+        txtTaxaComissao.setEnabled(true);    
+    }//GEN-LAST:event_btnConsultarActionPerformed
+
+    private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
+        String CPF = formTxtCpf.getText().replace("-", "");
+        CPF = CPF.replace(".", "");
+        vendedor = new Vendedor(CPF, 
+                              txtNome.getText(),
+                              Double.valueOf(txtSalarioBase.getText()));
+        vendedor.setEndereco(txtEndereco.getText());
+        vendedor.setCidade(txtCidade.getText());
+        vendedor.setUf(cboUf.getSelectedItem().toString());
+        vendedor.setCep(txtCep.getText());
+        vendedor.setDdd(txtDdd.getText());
+        vendedor.setTelefone(txtTelefone.getText());
+        vendedor.setTaxaComissao(Double.valueOf(txtTaxaComissao.getText()));
+        
+        
+        daoVendedor.incluir(vendedor);
+         
+        formTxtCpf.setText("");
+        txtNome.setText("");
+        txtEndereco.setText("");
+        txtCidade.setText("");
+        cboUf.setSelectedIndex(0);
+        txtCep.setText("");
+        txtDdd.setText("");
+        txtTelefone.setText("");
+        txtSalarioBase.setText("");
+        txtTaxaComissao.setText("");
+        
+        formTxtCpf.setEnabled(true);
+        formTxtCpf.requestFocus();
+        txtNome.setEnabled(false);
+        txtEndereco.setEnabled(false);
+        txtCidade.setEnabled(false);
+        cboUf.setEnabled(false);
+        txtCep.setEnabled(false);
+        txtDdd.setEnabled(false);
+        txtTelefone.setEnabled(false);
+        txtSalarioBase.setEnabled(false);
+        txtTaxaComissao.setEnabled(false);
+        
+        btnConsultar.setEnabled(true);
+        btnIncluir.setEnabled(false);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+    }//GEN-LAST:event_btnIncluirActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        if (JOptionPane.showConfirmDialog(null, "Confirma Alteração?")== 0){//Sim
+           vendedor.setNome(txtNome.getText());
+           vendedor.setEndereco(txtEndereco.getText());
+           vendedor.setCidade(txtCidade.getText());
+           vendedor.setUf(cboUf.getSelectedItem().toString());
+           vendedor.setCep(txtCep.getText());
+           vendedor.setDdd(txtDdd.getText());
+           vendedor.setTelefone(txtTelefone.getText());
+           vendedor.setSalarioBase(Double.valueOf(txtSalarioBase.getText()));
+           vendedor.setTaxaComissao(Double.valueOf(txtTaxaComissao.getText()));
+           daoVendedor.alterar(vendedor);
+        } 
+        
+        formTxtCpf.setText("");
+        txtNome.setText("");
+        txtEndereco.setText("");
+        txtCidade.setText("");
+        cboUf.setSelectedIndex(0);
+        txtCep.setText("");
+        txtDdd.setText("");
+        txtTelefone.setText("");
+        txtSalarioBase.setText("");
+        txtTaxaComissao.setText("");        
+        
+        formTxtCpf.setEnabled(true);
+        formTxtCpf.requestFocus();
+        txtNome.setEnabled(false);
+        txtEndereco.setEnabled(false);
+        txtCidade.setEnabled(false);
+        cboUf.setEnabled(false);
+        txtCep.setEnabled(false);
+        txtDdd.setEnabled(false);
+        txtTelefone.setEnabled(false);
+        txtSalarioBase.setEnabled(false);
+        txtTaxaComissao.setEnabled(false);
+        
+        btnConsultar.setEnabled(true);
+        btnIncluir.setEnabled(false);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false); 
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        if (JOptionPane.showConfirmDialog(null, "Confirma Exclusão?") == 0){
+            daoVendedor.excluir(vendedor); 
+
+            formTxtCpf.setText("");
+            txtNome.setText("");
+            txtEndereco.setText("");
+            txtCidade.setText("");
+            cboUf.setSelectedIndex(0);
+            txtCep.setText("");
+            txtDdd.setText("");
+            txtTelefone.setText("");
+            txtSalarioBase.setText("");
+            txtTaxaComissao.setText(""); 
+            
+            formTxtCpf.setEnabled(true);
+            formTxtCpf.requestFocus();
+            txtNome.setEnabled(false);
+            txtEndereco.setEnabled(false);
+            txtCidade.setEnabled(false);
+            cboUf.setEnabled(false);
+            txtCep.setEnabled(false);
+            txtDdd.setEnabled(false);
+            txtTelefone.setEnabled(false);
+            txtSalarioBase.setEnabled(false);
+            txtTaxaComissao.setEnabled(false);
+
+            btnConsultar.setEnabled(true);
+            btnIncluir.setEnabled(false);
+            btnAlterar.setEnabled(false);
+            btnExcluir.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        conexao = new Conexao("BD1723015","BD1723015");
+        conexao.setDriver("oracle.jdbc.driver.OracleDriver");
+        conexao.setConnectionString("jdbc:oracle:thin:@apolo:1521:xe");
+        daoVendedor = new DaoVendedor(conexao.conectar());
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -305,7 +512,8 @@ public class GuiVendedor extends javax.swing.JFrame {
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnIncluir;
     private javax.swing.JButton btnSair;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JComboBox<String> cboUf;
+    private javax.swing.JFormattedTextField formTxtCpf;
     private javax.swing.JLabel lblCEP;
     private javax.swing.JLabel lblCPF;
     private javax.swing.JLabel lblCidade;
@@ -323,6 +531,8 @@ public class GuiVendedor extends javax.swing.JFrame {
     private javax.swing.JTextField txtSalarioBase;
     private javax.swing.JTextField txtTaxaComissao;
     private javax.swing.JTextField txtTelefone;
-    private javax.swing.JTextField txtUF;
     // End of variables declaration//GEN-END:variables
+    private Conexao conexao = null;
+    private Vendedor vendedor = null;
+    private DaoVendedor daoVendedor = null;
 }
