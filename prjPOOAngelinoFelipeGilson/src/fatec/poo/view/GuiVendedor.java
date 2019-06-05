@@ -302,16 +302,13 @@ public class GuiVendedor extends javax.swing.JFrame {
         
         vendedor = daoVendedor.consultar(cpf);
         
-        if (vendedor == null){
-            
+        if (vendedor == null){           
             btnConsultar.setEnabled(false);
             btnIncluir.setEnabled(true);
             btnAlterar.setEnabled(false);
-            btnExcluir.setEnabled(false);
-            
+            btnExcluir.setEnabled(false);        
         }
-        else {
-            
+        else {           
             txtNome.setText(vendedor.getNome());
             txtCidade.setText(vendedor.getCidade());
             txtEndereco.setText(vendedor.getEndereco());
@@ -354,7 +351,6 @@ public class GuiVendedor extends javax.swing.JFrame {
         vendedor.setDdd(txtDdd.getText());
         vendedor.setTelefone(txtTelefone.getText());
         vendedor.setTaxaComissao(Double.valueOf(txtTaxaComissao.getText()));
-        
         
         daoVendedor.incluir(vendedor);
          
@@ -465,7 +461,7 @@ public class GuiVendedor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        conexao = new Conexao("BD1723015","BD1723015");
+        conexao = new Conexao("BD1723015", "BD1723015");
         conexao.setDriver("oracle.jdbc.driver.OracleDriver");
         conexao.setConnectionString("jdbc:oracle:thin:@apolo:1521:xe");
         daoVendedor = new DaoVendedor(conexao.conectar());

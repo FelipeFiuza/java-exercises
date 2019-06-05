@@ -287,7 +287,7 @@ public class GuiCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        conexao = new Conexao("BD1723015","BD1723015");
+        conexao = new Conexao("BD1723015", "BD1723015");
         conexao.setDriver("oracle.jdbc.driver.OracleDriver");
         conexao.setConnectionString("jdbc:oracle:thin:@apolo:1521:xe");
         daoCliente = new DaoCliente(conexao.conectar());
@@ -299,11 +299,11 @@ public class GuiCliente extends javax.swing.JFrame {
             formTxtCpf.requestFocus();
             return;
         }
-        
-        cliente = null;
         String cpf = formTxtCpf.getText();
+        cliente = null;
         cpf = cpf.replace("-", "");
         cpf = cpf.replace(".", "");
+        
         cliente = daoCliente.consultar(cpf);
         
         if (cliente == null){
@@ -341,7 +341,6 @@ public class GuiCliente extends javax.swing.JFrame {
         txtTelefone.setEnabled(true);
         txtLimiteCredito.setEnabled(true);
         lblLimiteDisponivel.setEnabled(true);
-  
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
@@ -390,7 +389,7 @@ public class GuiCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIncluirActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        if (JOptionPane.showConfirmDialog(null, "Confirma Alteração?")== 0){//Sim
+        if (JOptionPane.showConfirmDialog(null, "Confirma Alteração?") == 0){
            cliente.setNome(txtNome.getText());
            cliente.setEndereco(txtEndereco.getText());
            cliente.setCidade(txtCidade.getText());
@@ -470,30 +469,6 @@ public class GuiCliente extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GuiCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GuiCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GuiCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GuiCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new GuiCliente().setVisible(true);
