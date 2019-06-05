@@ -8,6 +8,7 @@ package fatec.poo.view;
 import fatec.poo.control.Conexao;
 import fatec.poo.control.DaoCliente;
 import fatec.poo.model.Cliente;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -286,31 +287,30 @@ public class GuiCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        conexao = new Conexao("BD1723015", "BD1723015");
+        conexao = new Conexao("BD1723015","BD1723015");
         conexao.setDriver("oracle.jdbc.driver.OracleDriver");
         conexao.setConnectionString("jdbc:oracle:thin:@apolo:1521:xe");
         daoCliente = new DaoCliente(conexao.conectar());
     }//GEN-LAST:event_formWindowOpened
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        if(!cliente.validarCPF(formTxtCpf.getText()))
-        {
-            System.out.println("CPF Errado!");
+        if(!cliente.validarCPF(formTxtCpf.getText())) {
+            JOptionPane.showMessageDialog(this, "CPF Inválido! Por favor, digite um CPF válido.", "Erro CPF", 2);
             formTxtCpf.requestFocus();
             return;
         }
         
         cliente = null;
-        
-        cliente = daoCliente.consultar(formTxtCpf.getText());
+        String cpf = formTxtCpf.getText();
+        cpf = cpf.replace("-", "");
+        cpf = cpf.replace(".", "");
+        cliente = daoCliente.consultar(cpf);
         
         if (cliente == null){
-            
             btnConsultar.setEnabled(false);
             btnIncluir.setEnabled(true);
             btnAlterar.setEnabled(false);
             btnExcluir.setEnabled(false);
-            
         }
         else {
             
@@ -320,8 +320,9 @@ public class GuiCliente extends javax.swing.JFrame {
             txtCep.setText(cliente.getCep());
             txtDdd.setText(cliente.getDdd());
             txtTelefone.setText(cliente.getTelefone());
-            lblLimiteCredito.setText(Double.toString(cliente.getLimiteCred()));
+            txtLimiteCredito.setText(Double.toString(cliente.getLimiteCred()));
             lblLimiteDisponivel.setText(Double.toString(cliente.getLimiteDisp()));
+            txtEndereco.setText(cliente.getEndereco());
                      
             btnConsultar.setEnabled(false);
             btnIncluir.setEnabled(false);
@@ -338,15 +339,161 @@ public class GuiCliente extends javax.swing.JFrame {
         txtCep.setEnabled(true);
         txtDdd.setEnabled(true);
         txtTelefone.setEnabled(true);
-        lblLimiteCredito.setEnabled(true);
+        txtLimiteCredito.setEnabled(true);
         lblLimiteDisponivel.setEnabled(true);
   
     }//GEN-LAST:event_btnConsultarActionPerformed
+
+    private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
+        String CPF = formTxtCpf.getText().replace("-", "");
+        Double limiteCred = Double.valueOf(txtLimiteCredito.getText());
+        CPF = CPF.replace(".", "");
+  
+        cliente = new Cliente(CPF, txtNome.getText(), limiteCred);
+        cliente.setEndereco(txtEndereco.getText());
+        cliente.setCidade(txtCidade.getText());
+        cliente.setUf(cboUf.getSelectedItem().toString());
+        cliente.setCep(txtCep.getText());
+        cliente.setDdd(txtDdd.getText());
+        cliente.setTelefone(txtTelefone.getText());
+        cliente.setLimiteDisp(limiteCred);
+    
+        daoCliente.incluir(cliente);
+         
+        formTxtCpf.setText("");
+        txtNome.setText("");
+        txtEndereco.setText("");
+        txtCidade.setText("");
+        cboUf.setSelectedIndex(0);
+        txtCep.setText("");
+        txtDdd.setText("");
+        txtTelefone.setText("");
+        txtLimiteCredito.setText("");
+        lblLimiteDisponivel.setText("");
+        
+        formTxtCpf.setEnabled(true);
+        formTxtCpf.requestFocus();
+        txtNome.setEnabled(false);
+        txtEndereco.setEnabled(false);
+        txtCidade.setEnabled(false);
+        cboUf.setEnabled(false);
+        txtCep.setEnabled(false);
+        txtDdd.setEnabled(false);
+        txtTelefone.setEnabled(false);
+        txtLimiteCredito.setEnabled(false);
+        lblLimiteDisponivel.setEnabled(false);
+        
+        btnConsultar.setEnabled(true);
+        btnIncluir.setEnabled(false);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false); 
+    }//GEN-LAST:event_btnIncluirActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        if (JOptionPane.showConfirmDialog(null, "Confirma Alteração?")== 0){//Sim
+           cliente.setNome(txtNome.getText());
+           cliente.setEndereco(txtEndereco.getText());
+           cliente.setCidade(txtCidade.getText());
+           cliente.setUf(cboUf.getSelectedItem().toString());
+           cliente.setCep(txtCep.getText());
+           cliente.setDdd(txtDdd.getText());
+           cliente.setTelefone(txtTelefone.getText());
+           cliente.setLimiteCred(Double.valueOf(txtLimiteCredito.getText()));
+           cliente.setLimiteDisp(Double.valueOf(lblLimiteDisponivel.getText()));
+           daoCliente.alterar(cliente);
+        } 
+        
+        formTxtCpf.setText("");
+        txtNome.setText("");
+        txtEndereco.setText("");
+        txtCidade.setText("");
+        cboUf.setSelectedIndex(0);
+        txtCep.setText("");
+        txtDdd.setText("");
+        txtTelefone.setText("");
+        txtLimiteCredito.setText("");
+        lblLimiteDisponivel.setText("");        
+        
+        formTxtCpf.setEnabled(true);
+        formTxtCpf.requestFocus();
+        txtNome.setEnabled(false);
+        txtEndereco.setEnabled(false);
+        txtCidade.setEnabled(false);
+        cboUf.setEnabled(false);
+        txtCep.setEnabled(false);
+        txtDdd.setEnabled(false);
+        txtTelefone.setEnabled(false);
+        txtLimiteCredito.setEnabled(false);
+        lblLimiteDisponivel.setEnabled(false);
+        
+        btnConsultar.setEnabled(true);
+        btnIncluir.setEnabled(false);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false); 
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        if (JOptionPane.showConfirmDialog(null, "Confirma Exclusão?") == 0){
+            daoCliente.excluir(cliente); 
+
+            formTxtCpf.setText("");
+            txtNome.setText("");
+            txtEndereco.setText("");
+            txtCidade.setText("");
+            cboUf.setSelectedIndex(0);
+            txtCep.setText("");
+            txtDdd.setText("");
+            txtTelefone.setText("");
+            txtLimiteCredito.setText("");
+            lblLimiteDisponivel.setText(""); 
+            
+            formTxtCpf.setEnabled(true);
+            formTxtCpf.requestFocus();
+            txtNome.setEnabled(false);
+            txtEndereco.setEnabled(false);
+            txtCidade.setEnabled(false);
+            cboUf.setEnabled(false);
+            txtCep.setEnabled(false);
+            txtDdd.setEnabled(false);
+            txtTelefone.setEnabled(false);
+            txtLimiteCredito.setEnabled(false);
+            lblLimiteDisponivel.setEnabled(false);
+
+            btnConsultar.setEnabled(true);
+            btnIncluir.setEnabled(false);
+            btnAlterar.setEnabled(false);
+            btnExcluir.setEnabled(false);
+        }        
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(GuiCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(GuiCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(GuiCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(GuiCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new GuiCliente().setVisible(true);

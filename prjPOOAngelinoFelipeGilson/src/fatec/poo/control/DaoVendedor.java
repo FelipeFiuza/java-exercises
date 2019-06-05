@@ -38,16 +38,16 @@ public class DaoVendedor {
             ps.setString(8, vendedor.getTelefone());
             ps.setDouble(9, vendedor.getSalarioBase());
             ps.setDouble(10, vendedor.getTaxaComissao());
-                              
+            
+                      
             ps.execute();
         } catch (SQLException ex) {
-            System.out.println("Erro ao incluir ->" + ex.toString());   
+            System.out.println(ex.toString());   
         }
     }
     
     public void alterar(Vendedor vendedor) {
         PreparedStatement ps = null;
-        
         try {
             ps = conn.prepareStatement("UPDATE vendedores SET nome = ?," +
                                                            "endereco = ?, " +
@@ -58,7 +58,7 @@ public class DaoVendedor {
                                                            "telefone = ?, " +
                                                            "salarioBase = ?, " +
                                                            "taxaComissao = ?" +
-                                                           "WHERE cpf = ?");
+                                                           "where cpf = ?");
             
             ps.setString(1, vendedor.getNome());
             ps.setString(2, vendedor.getEndereco());
@@ -71,36 +71,38 @@ public class DaoVendedor {
             ps.setDouble(9, vendedor.getTaxaComissao());
             ps.setString(10, vendedor.getCpf());
             
+           
             ps.execute();
         } catch (SQLException ex) {
-            System.out.println("Error ao alterar -> " + ex.toString());   
+            System.out.println(ex.toString());   
         }
     }
         
     public  Vendedor consultar (String cpf) {
         Vendedor v = null;
+       
         PreparedStatement ps = null;
- 
         try {
-            ps = conn.prepareStatement("SELECT * FROM vendedores WHERE cpf = ?");
+            ps = conn.prepareStatement("SELECT * from VENDEDORES where CPF = ?");
             
             ps.setString(1, cpf);
             ResultSet rs = ps.executeQuery();
            
             if (rs.next() == true) {
-                v = new Vendedor (cpf, rs.getString("nome"), rs.getDouble("salariobase") );
-                v.setEndereco(rs.getString("endereco"));
-                v.setCidade(rs.getString("cidade"));
-                v.setUf(rs.getString("uf"));
-                v.setCep(rs.getString("cep"));
-                v.setDdd(rs.getString("ddd"));
-                v.setTelefone(rs.getString("telefone"));
-                v.setSalarioBase(rs.getDouble("salariobase"));
-                v.setTaxaComissao(rs.getDouble("taxacomissao"));               
+                v = new Vendedor (cpf, rs.getString("NOME"), rs.getDouble("SALARIOBASE") );
+                v.setEndereco(rs.getString("ENDERECO"));
+                v.setCidade(rs.getString("CIDADE"));
+                v.setUf(rs.getString("UF"));
+                v.setCep(rs.getString("CEP"));
+                v.setDdd(rs.getString("DDD"));
+                v.setTelefone(rs.getString("TELEFONE"));
+                v.setSalarioBase(rs.getDouble("SALARIOBASE"));
+                v.setTaxaComissao(rs.getDouble("TAXACOMISSAO"));
+                
             }
         }
         catch (SQLException ex) { 
-            System.out.println("Erro ao consultar -> " + ex.toString());   
+            System.out.println(ex.toString());   
         }
         return (v);
     }    
@@ -108,11 +110,13 @@ public class DaoVendedor {
     public void excluir(Vendedor vendedor) {
         PreparedStatement ps = null;
         try {
-            ps = conn.prepareStatement("DELETE FROM vendedores WHERE cpf = ?");
+            ps = conn.prepareStatement("DELETE FROM vendedores where cpf = ?");
+            
             ps.setString(1, vendedor.getCpf());
+                      
             ps.execute();
         } catch (SQLException ex) {
-            System.out.println("Erro ao deletar -> " + ex.toString());   
+            System.out.println(ex.toString());   
         }
     }
 }

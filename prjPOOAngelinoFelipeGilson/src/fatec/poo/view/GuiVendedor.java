@@ -54,7 +54,7 @@ public class GuiVendedor extends javax.swing.JFrame {
         lblCidade = new javax.swing.JLabel();
         txtCidade = new javax.swing.JTextField();
         btnConsultar = new javax.swing.JButton();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        formTxtCpf = new javax.swing.JFormattedTextField();
         cboUf = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -105,6 +105,11 @@ public class GuiVendedor extends javax.swing.JFrame {
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/Eraser.png"))); // NOI18N
         btnExcluir.setText("Excluir");
         btnExcluir.setEnabled(false);
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnSair.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/exit.png"))); // NOI18N
@@ -297,13 +302,16 @@ public class GuiVendedor extends javax.swing.JFrame {
         
         vendedor = daoVendedor.consultar(cpf);
         
-        if (vendedor == null){           
+        if (vendedor == null){
+            
             btnConsultar.setEnabled(false);
             btnIncluir.setEnabled(true);
             btnAlterar.setEnabled(false);
-            btnExcluir.setEnabled(false);        
+            btnExcluir.setEnabled(false);
+            
         }
-        else {           
+        else {
+            
             txtNome.setText(vendedor.getNome());
             txtCidade.setText(vendedor.getCidade());
             txtEndereco.setText(vendedor.getEndereco());
@@ -346,6 +354,7 @@ public class GuiVendedor extends javax.swing.JFrame {
         vendedor.setDdd(txtDdd.getText());
         vendedor.setTelefone(txtTelefone.getText());
         vendedor.setTaxaComissao(Double.valueOf(txtTaxaComissao.getText()));
+        
         
         daoVendedor.incluir(vendedor);
          
@@ -456,7 +465,7 @@ public class GuiVendedor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        conexao = new Conexao("BD1723015", "BD1723015");
+        conexao = new Conexao("BD1723015","BD1723015");
         conexao.setDriver("oracle.jdbc.driver.OracleDriver");
         conexao.setConnectionString("jdbc:oracle:thin:@apolo:1521:xe");
         daoVendedor = new DaoVendedor(conexao.conectar());
@@ -504,7 +513,7 @@ public class GuiVendedor extends javax.swing.JFrame {
     private javax.swing.JButton btnIncluir;
     private javax.swing.JButton btnSair;
     private javax.swing.JComboBox<String> cboUf;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JFormattedTextField formTxtCpf;
     private javax.swing.JLabel lblCEP;
     private javax.swing.JLabel lblCPF;
     private javax.swing.JLabel lblCidade;
