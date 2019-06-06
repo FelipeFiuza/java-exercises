@@ -60,5 +60,4 @@ public class Produto {
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
-    
 }

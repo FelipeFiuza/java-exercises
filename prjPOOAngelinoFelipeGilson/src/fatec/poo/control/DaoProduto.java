@@ -24,6 +24,7 @@ public class DaoProduto {
                                                             "unidadeMedida, " + 
                                                             "preco, " +
                                                             "estoqueMinimo) VALUES (?,?,?,?,?,?)");
+            
             ps.setString(1, produto.getCodigo());
             ps.setString(2, produto.getDescricao());
             ps.setDouble(3, produto.getQtdeEstoque());
@@ -33,7 +34,7 @@ public class DaoProduto {
                       
             ps.execute();
         } catch (SQLException ex) {
-            System.out.println(ex.toString());   
+            System.out.println("Erro ao incluir ->" + ex.toString());   
         }
     }
     
@@ -53,11 +54,10 @@ public class DaoProduto {
             ps.setDouble(4, produto.getPreco());
             ps.setDouble(5, produto.getEstoqueMinimo());
             ps.setString(6, produto.getCodigo());
-            
-           
+              
             ps.execute();
         } catch (SQLException ex) {
-            System.out.println(ex.toString());   
+            System.out.println("Erro ao alterar ->" + ex.toString());   
         }
     }
         
@@ -66,7 +66,7 @@ public class DaoProduto {
        
         PreparedStatement ps = null;
         try {
-            ps = conn.prepareStatement("SELECT * from produtos where codigo = ?");
+            ps = conn.prepareStatement("SELECT * FROM produtos WHERE codigo = ?");
             
             ps.setString(1, codigo);
             ResultSet rs = ps.executeQuery();
@@ -76,12 +76,11 @@ public class DaoProduto {
                 p.setQtdeEstoque(rs.getDouble("qtdeEstoque"));
                 p.setUnidadeMedida(rs.getString("unidadeMedida"));
                 p.setPreco(rs.getDouble("preco"));
-                p.setEstoqueMinimo(rs.getDouble("estoqueMinimo"));
-                
+                p.setEstoqueMinimo(rs.getDouble("estoqueMinimo"));               
             }
         }
         catch (SQLException ex) { 
-            System.out.println(ex.toString());   
+            System.out.println("Erro ao consultar" + ex.toString());   
         }
         return (p);
     }    
@@ -89,13 +88,13 @@ public class DaoProduto {
     public void excluir(Produto produto) {
         PreparedStatement ps = null;
         try {
-            ps = conn.prepareStatement("DELETE FROM produtos where codigo = ?");
+            ps = conn.prepareStatement("DELETE FROM produtos WHERE codigo = ?");
             
             ps.setString(1, produto.getCodigo());
                       
             ps.execute();
         } catch (SQLException ex) {
-            System.out.println(ex.toString());   
+            System.out.println("Erro no delete ->" + ex.toString());   
         }
     }
 }

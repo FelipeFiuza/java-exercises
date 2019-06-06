@@ -313,7 +313,6 @@ public class GuiCliente extends javax.swing.JFrame {
             btnExcluir.setEnabled(false);
         }
         else {
-            
             txtNome.setText(cliente.getNome());
             txtCidade.setText(cliente.getCidade());
             cboUf.setSelectedItem(cliente.getUf());
@@ -341,7 +340,6 @@ public class GuiCliente extends javax.swing.JFrame {
         txtTelefone.setEnabled(true);
         txtLimiteCredito.setEnabled(true);
         lblLimiteDisponivel.setEnabled(true);
-  
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed

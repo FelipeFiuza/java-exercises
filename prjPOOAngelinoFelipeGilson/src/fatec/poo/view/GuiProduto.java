@@ -224,7 +224,11 @@ public class GuiProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        if(!(txtCodigo.getText().matches("^[0-9]*$")))//testar se string é composta apenas por numeros
+        String codigo = txtCodigo.getText();
+        
+        System.out.println("dados do input" + codigo);
+        
+        if(!(codigo.matches("^[0-9]*$") || codigo.isEmpty()))
         {
             JOptionPane.showMessageDialog(this, "Codigo Inválido! Por favor, digite um codigo contendo apenas numeros.", "Erro Codigo", 2);
             txtCodigo.requestFocus();
@@ -232,19 +236,15 @@ public class GuiProduto extends javax.swing.JFrame {
         }
         
         produto = null;
-        
         produto = daoProduto.consultar(txtCodigo.getText());
         
         if (produto == null){
-            
             btnConsultar.setEnabled(false);
             btnIncluir.setEnabled(true);
             btnAlterar.setEnabled(false);
             btnExcluir.setEnabled(false);
-            
         }
         else {
-            
             txtDescricao.setText(produto.getDescricao());
             txtQtdeDisponivel.setText(Double.toString(produto.getQtdeEstoque()));
             txtUnidadeMedida.setText(produto.getUnidadeMedida());
@@ -267,7 +267,7 @@ public class GuiProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        conexao = new Conexao("BD1723015","BD1723015");
+        conexao = new Conexao("BD1723015", "BD1723015");
         conexao.setDriver("oracle.jdbc.driver.OracleDriver");
         conexao.setConnectionString("jdbc:oracle:thin:@apolo:1521:xe");
         daoProduto = new DaoProduto(conexao.conectar());
